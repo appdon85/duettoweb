@@ -69,11 +69,14 @@ export default function SignupPage() {
     <div className="flex flex-1 items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-semibold text-zinc-900">Duetto CRM</h1>
+          <span className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-lg font-bold text-white">
+            D
+          </span>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">Duetto CRM</h1>
           <p className="mt-1 text-sm text-zinc-500">Crie a conta da sua empresa</p>
         </div>
 
-        <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="tenantName" className="block text-sm font-medium text-zinc-700">
@@ -87,7 +90,7 @@ export default function SignupPage() {
                 maxLength={120}
                 value={tenantName}
                 onChange={(e) => handleTenantNameChange(e.target.value)}
-                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
 
@@ -107,7 +110,7 @@ export default function SignupPage() {
                   setSlugEditedManually(true);
                   setTenantSlug(e.target.value);
                 }}
-                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm font-mono focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm font-mono shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
               <p className="mt-1 text-xs text-zinc-400">
                 Só letras minúsculas, números e hífens. Identifica sua empresa no sistema.
@@ -127,7 +130,7 @@ export default function SignupPage() {
                 autoComplete="name"
                 value={adminName}
                 onChange={(e) => setAdminName(e.target.value)}
-                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
 
@@ -142,7 +145,7 @@ export default function SignupPage() {
                 autoComplete="email"
                 value={adminEmail}
                 onChange={(e) => setAdminEmail(e.target.value)}
-                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
 
@@ -159,7 +162,7 @@ export default function SignupPage() {
                 autoComplete="new-password"
                 value={adminPassword}
                 onChange={(e) => setAdminPassword(e.target.value)}
-                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
               <p className="mt-1 text-xs text-zinc-400">{PASSWORD_HINT}</p>
             </div>
@@ -175,7 +178,7 @@ export default function SignupPage() {
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
               />
             </div>
 
@@ -184,7 +187,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-md bg-zinc-900 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSubmitting ? "Criando conta…" : "Criar conta"}
             </button>
@@ -193,7 +196,7 @@ export default function SignupPage() {
 
         <p className="mt-6 text-center text-sm text-zinc-500">
           Já tem uma conta?{" "}
-          <Link href="/login" className="font-medium text-zinc-900 hover:underline">
+          <Link href="/login" className="font-medium text-blue-600 hover:text-blue-700 hover:underline">
             Entrar
           </Link>
         </p>
