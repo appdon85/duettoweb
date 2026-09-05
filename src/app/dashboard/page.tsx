@@ -1,27 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
 import { ApiError } from "@/lib/api";
 import type { TenantUserRow } from "@/lib/types";
+import { useRequireAuth } from "@/hooks/useRequireAuth";
+import { AppHeader } from "@/components/AppHeader";
 
 export default function DashboardPage() {
-  const { user, isLoading, logout, authFetch } = useAuth();
-  const router = useRouter();
+  const { user, isLoading, authFetch } = useRequireAuth();
 
   const [users, setUsers] = useState<TenantUserRow[] | null>(null);
   const [usersError, setUsersError] = useState<string | null>(null);
-
-  // Rota protegida: assim que a checagem inicial de sessão termina, sem
-  // usuário logado, manda para o login. Não redireciona enquanto isLoading é
-  // true para não expulsar alguém cujo refresh token ainda está sendo
-  // validado (ex.: após um F5).
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.replace("/login");
-    }
-  }, [isLoading, user, router]);
 
   useEffect(() => {
     if (!user) return;
@@ -53,19 +42,9 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
-          <h1 className="text-lg font-semibold text-zinc-900">Duetto CRM</h1>
-          <button
-            onClick={() => logout()}
-            className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50"
-          >
-            Sair
-          </button>
-        </div>
-      </header>
+      <AppHeader />
 
-      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
         <div className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
           <h2 className="text-sm font-medium text-zinc-500">Sua conta</h2>
           <dl className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">

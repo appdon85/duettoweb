@@ -45,3 +45,44 @@ export interface Role {
   permissions: string[];
   isSystem: boolean;
 }
+
+export interface Company {
+  id: string;
+  tenantId: string;
+  name: string;
+  cnpj: string | null;
+  website: string | null;
+  phone: string | null;
+  notes: string | null;
+  ownerUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CompanyDetail extends Company {
+  contacts: Array<{ id: string; name: string; email: string | null; role: string | null }>;
+}
+
+export interface Contact {
+  id: string;
+  tenantId: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  title: string | null;
+  notes: string | null;
+  ownerUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ContactDetail extends Contact {
+  companies: Array<{ id: string; name: string; role: string | null }>;
+}
+
+export interface Paginated<T> {
+  data: T[];
+  page: number;
+  pageSize: number;
+  total: number;
+}
