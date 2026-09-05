@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { ApiError } from "@/lib/api";
 import type { Activity, ActivityType, Company, Contact, Deal, Paginated } from "@/lib/types";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 
 const TYPES: Array<{ value: ActivityType; label: string }> = [
   { value: "CALL", label: "Ligação" },
@@ -209,16 +209,14 @@ export default function ActivitiesPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col">
-      <AppHeader />
-
-      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
-        <h1 className="mb-6 text-xl font-semibold text-zinc-900">Atividades</h1>
+    <AppShell>
+      <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-zinc-900">Atividades</h1>
 
         {canManage && (
           <form
             onSubmit={handleSubmit}
-            className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
+            className="mb-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm"
           >
             <h2 className="mb-4 text-sm font-medium text-zinc-500">
               {editingId ? "Editar atividade" : "Nova atividade"}
@@ -229,7 +227,7 @@ export default function ActivitiesPage() {
                 <select
                   value={form.type}
                   onChange={(e) => setForm({ ...form, type: e.target.value as ActivityType })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 >
                   {TYPES.map((t) => (
                     <option key={t.value} value={t.value}>
@@ -245,7 +243,7 @@ export default function ActivitiesPage() {
                   maxLength={200}
                   value={form.subject}
                   onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -256,7 +254,7 @@ export default function ActivitiesPage() {
                   type="datetime-local"
                   value={form.activityDate}
                   onChange={(e) => setForm({ ...form, activityDate: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -264,7 +262,7 @@ export default function ActivitiesPage() {
                 <select
                   value={form.companyId}
                   onChange={(e) => setForm({ ...form, companyId: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 >
                   <option value="">Nenhuma</option>
                   {companyOptions.map((c) => (
@@ -279,7 +277,7 @@ export default function ActivitiesPage() {
                 <select
                   value={form.contactId}
                   onChange={(e) => setForm({ ...form, contactId: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 >
                   <option value="">Nenhum</option>
                   {contactOptions.map((c) => (
@@ -294,7 +292,7 @@ export default function ActivitiesPage() {
                 <select
                   value={form.dealId}
                   onChange={(e) => setForm({ ...form, dealId: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 >
                   <option value="">Nenhum</option>
                   {dealOptions.map((d) => (
@@ -311,7 +309,7 @@ export default function ActivitiesPage() {
                   rows={2}
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
             </div>
@@ -325,7 +323,7 @@ export default function ActivitiesPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? "Salvando…" : editingId ? "Atualizar" : "Adicionar"}
               </button>
@@ -333,7 +331,7 @@ export default function ActivitiesPage() {
                 <button
                   type="button"
                   onClick={cancelEdit}
-                  className="rounded-md border border-zinc-300 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
+                  className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-50"
                 >
                   Cancelar
                 </button>
@@ -348,7 +346,7 @@ export default function ActivitiesPage() {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value as ActivityType | "")}
-              className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+              className="rounded-lg border border-zinc-300 px-3 py-1.5 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
             >
               <option value="">Todos os tipos</option>
               {TYPES.map((t) => (
@@ -381,11 +379,11 @@ export default function ActivitiesPage() {
             {activities?.map((activity) => (
               <li
                 key={activity.id}
-                className="rounded-lg border border-zinc-200 bg-white p-4 text-sm shadow-sm"
+                className="rounded-xl border border-zinc-200 bg-white p-4 text-sm shadow-sm transition-shadow hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <span className="inline-block rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-600">
+                    <span className="inline-block rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
                       {typeLabel(activity.type)}
                     </span>
                     <p className="mt-1 font-medium text-zinc-900">{activity.subject}</p>
@@ -455,7 +453,7 @@ export default function ActivitiesPage() {
             ))}
           </ul>
         )}
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

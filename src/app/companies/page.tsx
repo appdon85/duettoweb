@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { ApiError } from "@/lib/api";
 import type { Company, Paginated } from "@/lib/types";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 
 const PAGE_SIZE = 20;
 
@@ -129,16 +129,14 @@ export default function CompaniesPage() {
   const totalPages = result ? Math.max(1, Math.ceil(result.total / PAGE_SIZE)) : 1;
 
   return (
-    <div className="flex flex-1 flex-col">
-      <AppHeader />
-
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-        <h1 className="mb-6 text-xl font-semibold text-zinc-900">Empresas</h1>
+    <AppShell>
+      <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-zinc-900">Empresas</h1>
 
         {canManage && (
           <form
             onSubmit={handleSubmit}
-            className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
+            className="mb-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm"
           >
             <h2 className="mb-4 text-sm font-medium text-zinc-500">
               {editingId ? "Editar empresa" : "Nova empresa"}
@@ -151,7 +149,7 @@ export default function CompaniesPage() {
                   maxLength={200}
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -160,7 +158,7 @@ export default function CompaniesPage() {
                   maxLength={32}
                   value={form.cnpj}
                   onChange={(e) => setForm({ ...form, cnpj: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -169,7 +167,7 @@ export default function CompaniesPage() {
                   maxLength={40}
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div className="sm:col-span-2">
@@ -178,7 +176,7 @@ export default function CompaniesPage() {
                   maxLength={255}
                   value={form.website}
                   onChange={(e) => setForm({ ...form, website: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div className="sm:col-span-2">
@@ -188,7 +186,7 @@ export default function CompaniesPage() {
                   rows={2}
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
             </div>
@@ -199,7 +197,7 @@ export default function CompaniesPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? "Salvando…" : editingId ? "Atualizar" : "Adicionar"}
               </button>
@@ -207,7 +205,7 @@ export default function CompaniesPage() {
                 <button
                   type="button"
                   onClick={cancelEdit}
-                  className="rounded-md border border-zinc-300 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
+                  className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-50"
                 >
                   Cancelar
                 </button>
@@ -216,7 +214,7 @@ export default function CompaniesPage() {
           </form>
         )}
 
-        <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
           <div className="mb-4 flex items-center justify-between gap-4">
             <h2 className="text-sm font-medium text-zinc-500">
               {result ? `${result.total} empresa(s)` : "Empresas"}
@@ -229,7 +227,7 @@ export default function CompaniesPage() {
                 setPage(1);
                 setSearch(e.target.value);
               }}
-              className="w-56 rounded-md border border-zinc-300 px-3 py-1.5 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+              className="w-56 rounded-lg border border-zinc-300 px-3 py-1.5 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
             />
           </div>
 
@@ -244,7 +242,7 @@ export default function CompaniesPage() {
               ) : (
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-zinc-200 text-xs text-zinc-400">
+                    <tr className="border-b border-zinc-200 text-xs font-medium tracking-wide text-zinc-500 uppercase">
                       <th className="py-2 pr-4 font-medium">Nome</th>
                       <th className="py-2 pr-4 font-medium">CNPJ</th>
                       <th className="py-2 pr-4 font-medium">Telefone</th>
@@ -305,7 +303,7 @@ export default function CompaniesPage() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

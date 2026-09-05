@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { ApiError } from "@/lib/api";
 import type { Company, Contact, Deal, DealStage, Paginated } from "@/lib/types";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 
 const STAGES: Array<{ value: DealStage; label: string }> = [
   { value: "PROSPECTING", label: "Prospecção" },
@@ -201,16 +201,14 @@ export default function DealsPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col">
-      <AppHeader />
-
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">
-        <h1 className="mb-6 text-xl font-semibold text-zinc-900">Negócios</h1>
+    <AppShell>
+      <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-zinc-900">Negócios</h1>
 
         {canManage && (
           <form
             onSubmit={handleSubmit}
-            className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm"
+            className="mb-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm"
           >
             <h2 className="mb-4 text-sm font-medium text-zinc-500">
               {editingId ? "Editar negócio" : "Novo negócio"}
@@ -223,7 +221,7 @@ export default function DealsPage() {
                   maxLength={200}
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -234,7 +232,7 @@ export default function DealsPage() {
                   step="0.01"
                   value={form.value}
                   onChange={(e) => setForm({ ...form, value: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -245,7 +243,7 @@ export default function DealsPage() {
                   type="date"
                   value={form.expectedCloseDate}
                   onChange={(e) => setForm({ ...form, expectedCloseDate: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
               <div>
@@ -253,7 +251,7 @@ export default function DealsPage() {
                 <select
                   value={form.companyId}
                   onChange={(e) => setForm({ ...form, companyId: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 >
                   <option value="">Nenhuma</option>
                   {companyOptions.map((c) => (
@@ -268,7 +266,7 @@ export default function DealsPage() {
                 <select
                   value={form.contactId}
                   onChange={(e) => setForm({ ...form, contactId: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 >
                   <option value="">Nenhum</option>
                   {contactOptions.map((c) => (
@@ -285,7 +283,7 @@ export default function DealsPage() {
                   rows={2}
                   value={form.notes}
                   onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-zinc-300 px-3 py-2 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+                  className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                 />
               </div>
             </div>
@@ -296,7 +294,7 @@ export default function DealsPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-md bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? "Salvando…" : editingId ? "Atualizar" : "Adicionar"}
               </button>
@@ -304,7 +302,7 @@ export default function DealsPage() {
                 <button
                   type="button"
                   onClick={cancelEdit}
-                  className="rounded-md border border-zinc-300 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
+                  className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm transition-colors hover:bg-zinc-50"
                 >
                   Cancelar
                 </button>
@@ -320,7 +318,7 @@ export default function DealsPage() {
             placeholder="Buscar por título…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-56 rounded-md border border-zinc-300 px-3 py-1.5 text-sm focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500"
+            className="w-56 rounded-lg border border-zinc-300 px-3 py-1.5 text-sm shadow-sm transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
           />
         </div>
 
@@ -339,9 +337,9 @@ export default function DealsPage() {
                 return (
                   <div
                     key={stageDef.value}
-                    className="flex w-64 flex-shrink-0 flex-col rounded-lg border border-zinc-200 bg-zinc-50"
+                    className="flex w-64 flex-shrink-0 flex-col rounded-xl border border-zinc-200 bg-zinc-100/60"
                   >
-                    <div className="border-b border-zinc-200 bg-white px-3 py-2 rounded-t-lg">
+                    <div className="border-b border-zinc-200 bg-white px-3 py-2 rounded-t-xl">
                       <p className="text-sm font-medium text-zinc-900">{stageDef.label}</p>
                       <p className="text-xs text-zinc-400">
                         {dealsInStage.length} negócio(s) · {currencyFormatter.format(total)}
@@ -359,7 +357,7 @@ export default function DealsPage() {
                         return (
                           <div
                             key={deal.id}
-                            className="rounded-md border border-zinc-200 bg-white p-3 text-sm shadow-sm"
+                            className="rounded-lg border border-zinc-200 bg-white p-3 text-sm shadow-sm transition-shadow hover:shadow-md"
                           >
                             <p className="font-medium text-zinc-900">{deal.title}</p>
                             {deal.value != null && (
@@ -404,7 +402,7 @@ export default function DealsPage() {
                                     onClick={() =>
                                       void changeStage(deal.id, OPEN_STAGES[openIdx - 1])
                                     }
-                                    className="text-zinc-500 hover:text-zinc-900"
+                                    className="font-medium text-zinc-500 hover:text-zinc-900"
                                   >
                                     ◀ Voltar
                                   </button>
@@ -414,7 +412,7 @@ export default function DealsPage() {
                                     onClick={() =>
                                       void changeStage(deal.id, OPEN_STAGES[openIdx + 1])
                                     }
-                                    className="text-zinc-500 hover:text-zinc-900"
+                                    className="font-medium text-blue-600 hover:text-blue-800"
                                   >
                                     Avançar ▶
                                   </button>
@@ -455,7 +453,7 @@ export default function DealsPage() {
             </div>
           </div>
         )}
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }

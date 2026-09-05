@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ApiError } from "@/lib/api";
 import type { TenantUserRow } from "@/lib/types";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
-import { AppHeader } from "@/components/AppHeader";
+import { AppShell } from "@/components/AppShell";
 
 export default function DashboardPage() {
   const { user, isLoading, authFetch } = useRequireAuth();
@@ -41,11 +41,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-1 flex-col">
-      <AppHeader />
+    <AppShell>
+      <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <h1 className="mb-6 text-2xl font-semibold tracking-tight text-zinc-900">Painel</h1>
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
-        <div className="mb-8 rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+        <div className="mb-8 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
           <h2 className="text-sm font-medium text-zinc-500">Sua conta</h2>
           <dl className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
@@ -63,7 +63,7 @@ export default function DashboardPage() {
           </dl>
         </div>
 
-        <div className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-sm font-medium text-zinc-500">Usuários da empresa</h2>
 
           {!user.permissions.includes("users:read") && (
@@ -81,7 +81,7 @@ export default function DashboardPage() {
               ) : (
                 <table className="w-full text-left text-sm">
                   <thead>
-                    <tr className="border-b border-zinc-200 text-xs text-zinc-400">
+                    <tr className="border-b border-zinc-200 text-xs font-medium tracking-wide text-zinc-500 uppercase">
                       <th className="py-2 pr-4 font-medium">Nome</th>
                       <th className="py-2 pr-4 font-medium">E-mail</th>
                       <th className="py-2 pr-4 font-medium">Papel</th>
@@ -107,7 +107,7 @@ export default function DashboardPage() {
             </div>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AppShell>
   );
 }
