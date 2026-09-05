@@ -80,6 +80,32 @@ export interface ContactDetail extends Contact {
   companies: Array<{ id: string; name: string; role: string | null }>;
 }
 
+// Espelha o pgEnum "deal_stage" (ver crm-saas/src/deals/deal-stage.constants.ts).
+export type DealStage =
+  | 'PROSPECTING'
+  | 'QUALIFICATION'
+  | 'PROPOSAL'
+  | 'NEGOTIATION'
+  | 'WON'
+  | 'LOST';
+
+export interface Deal {
+  id: string;
+  tenantId: string;
+  title: string;
+  value: number | null;
+  stage: DealStage;
+  companyId: string | null;
+  contactId: string | null;
+  ownerUserId: string | null;
+  expectedCloseDate: string | null;
+  notes: string | null;
+  lostReason: string | null;
+  closedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Paginated<T> {
   data: T[];
   page: number;

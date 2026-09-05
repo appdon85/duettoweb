@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { href: "/dashboard", label: "Painel" },
   { href: "/companies", label: "Empresas" },
   { href: "/contacts", label: "Contatos" },
+  { href: "/deals", label: "Negócios" },
 ];
 
 export function AppHeader() {
