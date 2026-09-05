@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { href: "/companies", label: "Empresas" },
   { href: "/contacts", label: "Contatos" },
   { href: "/deals", label: "Negócios" },
+  { href: "/activities", label: "Atividades" },
 ];
 
 export function AppHeader() {

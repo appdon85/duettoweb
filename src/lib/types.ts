@@ -106,6 +106,26 @@ export interface Deal {
   updatedAt: string;
 }
 
+// Espelha o pgEnum "activity_type" (ver
+// crm-saas/src/activities/activity-type.constants.ts).
+export type ActivityType = 'CALL' | 'MEETING' | 'EMAIL' | 'NOTE' | 'TASK';
+
+export interface Activity {
+  id: string;
+  tenantId: string;
+  type: ActivityType;
+  subject: string;
+  notes: string | null;
+  activityDate: string;
+  completedAt: string | null;
+  companyId: string | null;
+  contactId: string | null;
+  dealId: string | null;
+  ownerUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Paginated<T> {
   data: T[];
   page: number;
