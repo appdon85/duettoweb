@@ -22,6 +22,7 @@ const TYPES: Array<{ value: ActivityType; label: string }> = [
   { value: "EMAIL", label: "E-mail" },
   { value: "NOTE", label: "Nota" },
   { value: "TASK", label: "Tarefa" },
+  { value: "EVENT", label: "Evento" },
 ];
 
 function typeLabel(type: ActivityType): string {

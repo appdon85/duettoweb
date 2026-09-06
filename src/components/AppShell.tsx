@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   BarChart3,
   Building2,
+  CalendarDays,
   ClipboardList,
   Handshake,
   LayoutDashboard,
@@ -20,6 +21,7 @@ const NAV_LINKS = [
   { href: "/contacts", label: "Contatos", icon: Users },
   { href: "/deals", label: "Negócios", icon: Handshake },
   { href: "/activities", label: "Atividades", icon: ClipboardList },
+  { href: "/calendar", label: "Calendário", icon: CalendarDays },
   { href: "/reports", label: "Relatórios", icon: BarChart3 },
 ];
 

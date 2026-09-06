@@ -107,8 +107,9 @@ export interface Deal {
 }
 
 // Espelha o pgEnum "activity_type" (ver
-// crm-saas/src/activities/activity-type.constants.ts).
-export type ActivityType = 'CALL' | 'MEETING' | 'EMAIL' | 'NOTE' | 'TASK';
+// crm-saas/src/activities/activity-type.constants.ts). 'EVENT' foi
+// adicionado para o modulo de Calendario - ver app/calendar/page.tsx.
+export type ActivityType = 'CALL' | 'MEETING' | 'EMAIL' | 'NOTE' | 'TASK' | 'EVENT';
 
 export interface Activity {
   id: string;
@@ -122,6 +123,19 @@ export interface Activity {
   contactId: string | null;
   dealId: string | null;
   ownerUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Bloqueio de agenda (indisponibilidade por usuario) do modulo de
+// Calendario (ver crm-saas/src/database/schema/calendar-blocks.schema.ts).
+export interface CalendarBlock {
+  id: string;
+  tenantId: string;
+  userId: string;
+  startAt: string;
+  endAt: string;
+  reason: string | null;
   createdAt: string;
   updatedAt: string;
 }
