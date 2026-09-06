@@ -70,6 +70,45 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
   return data as T;
 }
 
+interface BlobRequestOptions {
+  /** Access token JWT a enviar como `Authorization: Bearer <token>`. */
+  accessToken?: string | null;
+}
+
+/**
+ * Variante de apiRequest() para endpoints binarios (ex.: GET /proposals/:id/pdf,
+ * GET /contracts/:id/pdf). O fetch nativo com Content-Type: application/json
+ * nao serve aqui - so' precisamos do header de autorizacao e do blob de
+ * resposta. Erros (ex.: 404, 403) ainda tentam ler o corpo como JSON para
+ * extrair uma mensagem, igual apiRequest().
+ */
+export async function apiRequestBlob(path: string, options: BlobRequestOptions = {}): Promise<Blob> {
+  const { accessToken } = options;
+
+  const headers: Record<string, string> = {};
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, { method: 'GET', headers });
+  } catch {
+    throw new ApiError(
+      0,
+      'Não foi possível conectar à API. Verifique sua internet ou tente novamente em instantes.',
+    );
+  }
+
+  if (!response.ok) {
+    const rawText = await response.text();
+    const data = rawText ? safeJsonParse(rawText) : undefined;
+    throw new ApiError(response.status, extractErrorMessage(data, response.status), data);
+  }
+
+  return response.blob();
+}
+
 function safeJsonParse(text: string): unknown {
   try {
     return JSON.parse(text);

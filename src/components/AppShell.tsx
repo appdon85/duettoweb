@@ -8,6 +8,9 @@ import {
   Building2,
   CalendarDays,
   ClipboardList,
+  FileCheck,
+  FileSignature,
+  FileText,
   Handshake,
   LayoutDashboard,
   LogOut,
@@ -22,6 +25,9 @@ const NAV_LINKS = [
   { href: "/deals", label: "Negócios", icon: Handshake },
   { href: "/activities", label: "Atividades", icon: ClipboardList },
   { href: "/calendar", label: "Calendário", icon: CalendarDays },
+  { href: "/templates", label: "Modelos", icon: FileText },
+  { href: "/proposals", label: "Propostas", icon: FileSignature },
+  { href: "/contracts", label: "Contratos", icon: FileCheck },
   { href: "/reports", label: "Relatórios", icon: BarChart3 },
 ];
 

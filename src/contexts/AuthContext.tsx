@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 import { useRouter } from 'next/navigation';
-import { apiRequest, ApiError } from '@/lib/api';
+import { apiRequest, apiRequestBlob, ApiError } from '@/lib/api';
 import type { PublicUser, Tenant, Tokens } from '@/lib/types';
 
 // Estratégia de armazenamento de sessão (documentada aqui porque é uma
@@ -51,6 +51,7 @@ interface AuthContextValue {
   verifyMfa: (mfaToken: string, code: string) => Promise<void>;
   logout: () => Promise<void>;
   authFetch: <T>(path: string, options?: AuthFetchOptions) => Promise<T>;
+  authFetchBlob: (path: string) => Promise<Blob>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -242,9 +243,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [refresh],
   );
 
+  // Variante de authFetch para endpoints binarios (PDF) - mesma logica de
+  // 401 -> refresh -> retry unico, so' que delegando para apiRequestBlob em
+  // vez de apiRequest (ver comentario em authFetch acima).
+  const authFetchBlob = useCallback(
+    async (path: string): Promise<Blob> => {
+      try {
+        return await apiRequestBlob(path, { accessToken: accessTokenRef.current });
+      } catch (err) {
+        if (err instanceof ApiError && err.status === 401) {
+          const refreshed = await refresh();
+          if (refreshed) {
+            return apiRequestBlob(path, { accessToken: accessTokenRef.current });
+          }
+        }
+        throw err;
+      }
+    },
+    [refresh],
+  );
+
   const value = useMemo<AuthContextValue>(
-    () => ({ user, tenant, isLoading, signup, login, verifyMfa, logout, authFetch }),
-    [user, tenant, isLoading, signup, login, verifyMfa, logout, authFetch],
+    () => ({ user, tenant, isLoading, signup, login, verifyMfa, logout, authFetch, authFetchBlob }),
+    [user, tenant, isLoading, signup, login, verifyMfa, logout, authFetch, authFetchBlob],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

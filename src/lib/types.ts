@@ -194,3 +194,91 @@ export interface SalesFunnel {
   conversionRate: number;
   lostReasons: LostReason[];
 }
+
+// Espelha o pgEnum "document_template_type" (ver
+// crm-saas/src/templates/template-type.constants.ts). Modulo Comercial:
+// modelos de texto reutilizaveis (com variaveis {{...}}) usados para
+// pre-preencher o conteudo de propostas/contratos.
+export type TemplateType = 'PROPOSAL' | 'CONTRACT';
+
+export interface DocumentTemplate {
+  id: string;
+  tenantId: string;
+  type: TemplateType;
+  name: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Catalogo de variaveis suportadas no conteudo de um DocumentTemplate (ver
+// GET /templates/variables no backend) - usado como legenda no editor.
+export interface TemplateVariable {
+  key: string;
+  description: string;
+}
+
+// Espelha o pgEnum "proposal_status" (ver
+// crm-saas/src/proposals/proposal-status.constants.ts).
+export type ProposalStatus = 'DRAFT' | 'SENT' | 'ACCEPTED' | 'REJECTED' | 'EXPIRED';
+
+export interface ProposalItem {
+  id: string;
+  tenantId: string;
+  proposalId: string;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+  discount: number;
+  position: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Proposal {
+  id: string;
+  tenantId: string;
+  title: string;
+  companyId: string | null;
+  contactId: string | null;
+  dealId: string | null;
+  templateId: string | null;
+  content: string | null;
+  status: ProposalStatus;
+  validUntil: string | null;
+  totalValue: number;
+  notes: string | null;
+  ownerUserId: string | null;
+  acceptedAt: string | null;
+  rejectedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  // Presente apenas no detalhe (GET /proposals/:id) - linhas de item nao
+  // vem nas listagens paginadas (GET /proposals).
+  items?: ProposalItem[];
+}
+
+// Espelha o pgEnum "contract_status" (ver
+// crm-saas/src/contracts/contract-status.constants.ts).
+export type ContractStatus = 'DRAFT' | 'ACTIVE' | 'EXPIRED' | 'TERMINATED';
+
+export interface Contract {
+  id: string;
+  tenantId: string;
+  proposalId: string | null;
+  title: string;
+  companyId: string | null;
+  contactId: string | null;
+  dealId: string | null;
+  templateId: string | null;
+  content: string | null;
+  status: ContractStatus;
+  totalValue: number | null;
+  startDate: string | null;
+  endDate: string | null;
+  signedAt: string | null;
+  notes: string | null;
+  ownerUserId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
